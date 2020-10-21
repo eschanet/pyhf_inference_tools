@@ -36,7 +36,7 @@ def main(group, output_file):
 
         simplified_patch = {}
         simplified_patch['metadata'] = patch.metadata
-        simplified_patch['name'] = patch.name
+        # simplified_patch['name'] = patch.name
         simplified_patch['patch'] = []
 
         for p in patch.patch:
@@ -52,7 +52,7 @@ def main(group, output_file):
                     "type": "normfactor"
                 }
             ]
-            p['path'] = p['path'].split('samples/')[0]+'samples/2'
+            p['path'] = p['path'].split('samples/')[0]+'samples/1'
             simplified_patch['patch'].append(
                 p
             )
