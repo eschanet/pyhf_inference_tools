@@ -1,0 +1,4 @@
+workspaces/
+graphs/
+results/
+*.root
