@@ -125,10 +125,10 @@ def main(
     # plot.drawTheoryUncertaintyCurve(tfile.Get("Obs_0_Down"),color=ROOT.TColor.GetColor("#c24c00"))
     # plot.drawTheoryLegendLines( xyCoord=(0.2305,0.721),color=ROOT.TColor.GetColor("#c24c00"), length=0.045 )
 
-    color1 = ROOT.TColor.GetColor("#07a7ec")
-    color2 = ROOT.TColor.GetColor("#068ac6") 
-    color3 = ROOT.TColor.GetColor("#000000")
-    color4 = ROOT.TColor.GetColor("#000000")
+    color1 = ROOT.TColor.GetColor("#e67e22")
+    color2 = ROOT.TColor.GetColor("#e67e22")
+    color3 = ROOT.TColor.GetColor("#07a7ec")
+    color4 = ROOT.TColor.GetColor("#068ac6")
 
     plot.drawOneSigmaBand(
         fullLH_file.Get("Band_1s_0"),

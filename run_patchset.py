@@ -28,7 +28,7 @@ def main(group, simplified, backend, optimizer, skip_to):
     pyhf.set_backend(backend, optimizer)
 
     bkgOnly = "BkgOnly.json" if not simplified else "simplified_BkgOnly.json"
-    patchset = "patchset.json" if not simplified else "simplified_patchset.json"
+    patchset = "C1N2_WZ_patchset.json" if not simplified else "simplified_patchset.json"
     ws = pyhf.Workspace(json.load(open(pathlib.Path(f"./analyses/{group}/likelihoods/"+bkgOnly), "r")))
     patchset = pyhf.PatchSet(json.load(open(pathlib.Path(f"./analyses/{group}/likelihoods/"+patchset), "r")))
 
