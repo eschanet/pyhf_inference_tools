@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+
+#
+# see https://github.com/scikit-hep/pyhf/issues/886
+#
+
 import pyhf
 import click
 import json
