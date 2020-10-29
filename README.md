@@ -2,7 +2,7 @@
 
 This repository gathers a bunch of scripts and tools to convert the HF output from an analysis into pyhf workspaces (`BkgOnly.json` and `patchset.json`). It also allows to create simplified versions of the likelihood using `simplify`. It further allows to cross-check the results of the simplified likelihood by comparing them with the full results from the analysis.
 
-Parts of this repository's scripts are inspired by gstark's [comnpress+3Loffshell combination infrastructure](https://gitlab.cern.ch/gstark/ewk-combination-3loffshell-compressed).
+Parts of this repository's scripts are inspired by gstark's [compressed+3Loffshell combination infrastructure](https://gitlab.cern.ch/gstark/ewk-combination-3loffshell-compressed).
 
 ### Signal patch
 
