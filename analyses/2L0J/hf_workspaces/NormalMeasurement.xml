@@ -1,0 +1,55 @@
+<!--
+This xml file created automatically on: 
+2019-11-14
+-->
+<!DOCTYPE Combination  SYSTEM 'HistFactorySchema.dtd'>
+
+<Combination OutputFilePrefix="./results/SlepSlep_direct_800_1_Exclusion_v58_240719_syst_DirSlep_all_Nom_SlepSlep_direct_800_1/BkgOnly" >
+
+
+  <Input>./NormalMeasurement_CRVZ_cuts.xml</Input>
+  <Input>./NormalMeasurement_CRWW_cuts.xml</Input>
+  <Input>./NormalMeasurement_CRtop_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_0a_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_1a_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_0b_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_1b_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_0c_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_1c_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_0d_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_1d_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_0e_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_1e_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_0f_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_1f_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_0g_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_1g_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_0h_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_1h_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_0i_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRSF_1i_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_0a_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_1a_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_0b_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_1b_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_0c_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_1c_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_0d_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_1d_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_0e_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_1e_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_0f_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_1f_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_0g_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_1g_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_0h_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_1h_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_0i_cuts.xml</Input>
+  <Input>./NormalMeasurement_SRDF_1i_cuts.xml</Input>
+
+  <Measurement Name="NormalMeasurement" Lumi="1" LumiRelErr="0.017" ExportOnly="True"  >
+    <POI>mu_SIG</POI>  
+    <ParamSetting Const="True">mu_BG</ParamSetting>
+  </Measurement> 
+
+</Combination>
