@@ -18,6 +18,17 @@ A simplified signal patch only contains nominal signal yields and no uncertainti
 python3 make_simplified_signalpatch.py --group <group> --output-file <output-file>
 ```
 
+### Fitting all workspaces
+
+Fitting all workspaces can be done using 
+
+```
+python3 run_cls.py --group <group>
+```
+
+Alternatively, once can also use `run_patchset.py` to run over an existing set of `BkgOnly.json` and `patchset.json` files built e.g. using `make_signalpatch.py` from above.
+
+
 ### Running fit over entire patchset
 
 Running a fit over the entire patchset using a provided likelihood can be done using:
