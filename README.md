@@ -17,3 +17,25 @@ A simplified signal patch only contains nominal signal yields and no uncertainti
 ```
 python3 make_simplified_signalpatch.py --group <group> --output-file <output-file>
 ```
+
+### Running fit over entire patchset
+
+Running a fit over the entire patchset using a provided likelihood can be done using:
+
+```
+python3 run_patchset.py --group <group>
+```
+
+This defaults to using the full likelihood. You can also specify `--simplified` in order to run using the simplified likelihood.
+
+
+### Creating harvest
+
+The results of the fits need to be harvested and converted into the right format for the HistFitter plotting tools to be able to use them. This can be done by running
+
+```
+python3 harvest.py --group <group>
+```
+
+### Plotting results
+
