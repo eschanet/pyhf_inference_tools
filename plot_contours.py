@@ -75,6 +75,11 @@ import click
     help="Draw logarithmic y-axis",
 )
 @click.option(
+    "--draw-CLs/--no-draw-CLs",
+    default=False,
+    help="Draw CLs numbers on plot",
+)
+@click.option(
     "--process-label",
     type=str,
     default=
@@ -101,6 +106,7 @@ def main(
     labels_top,
     logy,
     process_label,
+    draw_cls,
     luminosity,
 ):
 
@@ -121,7 +127,6 @@ def main(
         "analyses/{group}/graphs/pyhf_{group}_simplifiedLH.root".format(group=group)
     )
 
-
     plot.drawAxes([xmin, ymin, xmax, ymax])
 
     # plot.drawOneSigmaBand(tfile.Get("Band_1s_0"), color=ROOT.TColor.GetColor("#ff7300"), lineColor=ROOT.TColor.GetColor("#c24c00"), title = label1+' Exp.', legendOrder=0)
@@ -132,20 +137,53 @@ def main(
     # plot.drawTheoryLegendLines( xyCoord=(0.2305,0.721),color=ROOT.TColor.GetColor("#c24c00"), length=0.045 )
 
     color1 = ROOT.TColor.GetColor("#e67e22")
-    color2 = ROOT.TColor.GetColor("#e67e22")
+    color2 = ROOT.TColor.GetColor("#b2590c")
     color3 = ROOT.TColor.GetColor("#07a7ec")
-    color4 = ROOT.TColor.GetColor("#068ac6")
+    color4 = ROOT.TColor.GetColor("#0475a5")
+
+    if draw_cls:
+
+        plot.drawTextFromTGraph2D(
+            simplLH_file.Get("CLs_gr"),
+            title="Coloured numbers represent observed CLs",
+            size=0.0,
+            alpha=0.4,
+        )
+
+        plot.drawTextFromTGraph2D(
+            fullLH_file.Get("CLs_gr"),
+            title="",
+            color=color2,
+            alpha=0.6,
+            angle=30,
+            size=0.015,
+            yoffset=0.013*ymax,
+            format="%.1g",
+            titlesize=0.03
+        )
+
+        plot.drawTextFromTGraph2D(
+            simplLH_file.Get("CLs_gr"),
+            title="",
+            color=color4,
+            alpha=0.6,
+            angle=30,
+            size=0.015,
+            yoffset=-0.013 * ymax,
+            format="%.1g",
+            titlesize=0.03
+        )
 
     plot.drawOneSigmaBand(
         fullLH_file.Get("Band_1s_0"),
         color=color1,
-        lineColor=color2,
+        lineColor=color1,
         alpha=0.3,
         legendOrder=2,
         title='Full LH Exp.'
     )
     plot.drawExpected(
-        fullLH_file.Get("Exp_0"), color=color2, title=None, legendOrder=None
+        fullLH_file.Get("Exp_0"), color=color1, title=None, legendOrder=None
     )
     plot.drawObserved(
         fullLH_file.Get("Obs_0"),
@@ -157,13 +195,13 @@ def main(
     plot.drawOneSigmaBand(
         simplLH_file.Get("Band_1s_0"),
         color=color3,
-        lineColor=color4,
+        lineColor=color3,
         alpha=0.3,
         legendOrder=4,
         title='Simplified LH Exp.'
     )
     plot.drawExpected(
-        simplLH_file.Get("Exp_0"), color=color4, title=None, legendOrder=None
+        simplLH_file.Get("Exp_0"), color=color3, title=None, legendOrder=None
     )
     plot.drawObserved(
         simplLH_file.Get("Obs_0"),
@@ -173,11 +211,19 @@ def main(
     )
 
     if group == '1Lbb':
-        process_label = "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow h #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; ",
-
+        process_label = "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow h #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; "
         text = "m(#tilde{#chi}^{#pm}_{1}/#tilde{#chi}^{0}_{2}) < m(#tilde{#chi}^{0}_{1}) + 125 GeV"
         plot.drawLine(
             coordinates=[xmin, xmin - 125, ymax + 125, ymax],
+            label=text,
+            style=7,
+            angle=54
+        )
+    elif group == '2L0J':
+        process_label = "pp #rightarrow #tilde{#chi}^{#pm}_{1} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; "
+        text = "m(#tilde{#chi}^{#pm}_{1}) < m(#tilde{#chi}^{0}_{1}) + m(W)"
+        plot.drawLine(
+            coordinates=[xmin, xmin - 80, ymax + 80, ymax],
             label=text,
             style=7,
             angle=54

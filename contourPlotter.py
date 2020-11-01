@@ -148,6 +148,8 @@ class contourPlotter:
         alpha=0.6,
         angle=30,
         size=0.015,
+        xoffset=0.0,
+        yoffset=0.0,
         format="%.1g",
         titlesize=0.03
     ):
@@ -158,7 +160,7 @@ class contourPlotter:
         tmpText.SetTextAngle(angle)
         x, y, z, n = graph.GetX(), graph.GetY(), graph.GetZ(), graph.GetN()
         for i in xrange(n):
-            tmpText.DrawLatex(x[i], y[i], format % z[i])
+            tmpText.DrawLatex(x[i]+xoffset, y[i]+yoffset, format % z[i])
 
         tmpText.SetTextSize(titlesize)
         tmpText.SetTextAngle(-90)

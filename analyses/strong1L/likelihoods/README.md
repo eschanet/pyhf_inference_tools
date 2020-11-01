@@ -2,7 +2,7 @@
 
 The JSON likelihoods are serialized in this folder. This is done by providing a background-only workspace containing the signal/control channels at `BkgOnly.json` as well as patch files for each mass point on the signal phase-space explored in the analysis.
 
-All [jsonpatches](http://jsonpatch.com/) are contained in the file `patchset.json`. Each patch is identified in `patchset.json` by the metadata field `"name": "[XX]_oneStep_[m1]_[m2]_[m3]"` where `XX` is either `GG` for gluino pair production or `SS` for squark pair production, `m1` is the mass of the gluino or squark, and `m2` is the mass of the lightest chargino and [m3] is the mass of the lightest neutralino.
+All [jsonpatches](http://jsonpatch.com/) are contained in the file `patchset.json`. Each patch is identified in `patchset.json` by the metadata field `"name": "[XX]_oneStep_[m1]_[m2]_[m3]"` where `XX` is either `GG` for gluino pair production or `SS` for squark pair production, `m1` is the mass of the gluino or squark, `m2` is the mass of the lightest chargino and `m3` is the mass of the lightest neutralino.
 
 ## Producing signal workspaces
 
