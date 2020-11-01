@@ -17,7 +17,7 @@ def string_to_float(string):
 @click.option(
     "--group",
     default="1Lbb",
-    type=click.Choice(["1Lbb", "2L0J", "compressed"]),
+    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell"]),
 )
 @click.option('--simplified/--no-simplified', default=False)
 @click.option("--backend", default="numpy")

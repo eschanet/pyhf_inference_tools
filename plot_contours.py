@@ -13,7 +13,7 @@ import click
 @click.option(
     "--group",
     default="1Lbb",
-    type=click.Choice(["1Lbb", "2L0J", "compressed"]),
+    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell"]),
 )
 @click.option(
     "--is-simplified/--not-simplified",
@@ -70,10 +70,15 @@ import click
     help="y-position of labels drawn on the top-left of the plot",
 )
 @click.option(
+    "--logy/--no-logy",
+    default=False,
+    help="Draw logarithmic y-axis",
+)
+@click.option(
     "--process-label",
     type=str,
     default=
-    "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow h #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; ",
+    "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow Z #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; ",
     help="Label for the physics process drawn",
 )
 @click.option("--luminosity", type=float, default=139000)
@@ -94,6 +99,7 @@ def main(
     is_preliminary,
     labels_left,
     labels_top,
+    logy,
     process_label,
     luminosity,
 ):
@@ -136,7 +142,7 @@ def main(
         lineColor=color2,
         alpha=0.3,
         legendOrder=2,
-        title='Full Likelihood Exp.'
+        title='Full LH Exp.'
     )
     plot.drawExpected(
         fullLH_file.Get("Exp_0"), color=color2, title=None, legendOrder=None
@@ -144,7 +150,7 @@ def main(
     plot.drawObserved(
         fullLH_file.Get("Obs_0"),
         color=color1,
-        title='Full Likelihood Obs.',
+        title='Full LH Obs.',
         legendOrder=3
     )
 
@@ -154,7 +160,7 @@ def main(
         lineColor=color4,
         alpha=0.3,
         legendOrder=4,
-        title='Simplified Likelihood Exp.'
+        title='Simplified LH Exp.'
     )
     plot.drawExpected(
         simplLH_file.Get("Exp_0"), color=color4, title=None, legendOrder=None
@@ -162,18 +168,20 @@ def main(
     plot.drawObserved(
         simplLH_file.Get("Obs_0"),
         color=color3,
-        title='Simplified Likelihood Obs.',
+        title='Simplified LH Obs.',
         legendOrder=5
     )
 
+    if group == '1Lbb':
+        process_label = "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow h #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; ",
 
-    text = "m(#tilde{#chi}^{#pm}_{1}/#tilde{#chi}^{0}_{2}) < m(#tilde{#chi}^{0}_{1}) + 125 GeV"
-    plot.drawLine(
-        coordinates=[xmin, xmin - 125, ymax + 125, ymax],
-        label=text,
-        style=7,
-        angle=54
-    )
+        text = "m(#tilde{#chi}^{#pm}_{1}/#tilde{#chi}^{0}_{2}) < m(#tilde{#chi}^{0}_{1}) + 125 GeV"
+        plot.drawLine(
+            coordinates=[xmin, xmin - 125, ymax + 125, ymax],
+            label=text,
+            style=7,
+            angle=54
+        )
 
     ## Axis Labels
     plot.setXAxisLabel(xlabel)
@@ -188,8 +196,8 @@ def main(
         shape=(
             labels_left - 0.01,
             labels_top - 0.09,
-            labels_left + 0.3,
-            labels_top - 0.30,
+            labels_left + 0.25,
+            labels_top - 0.25,
         )
     )
     legend.SetTextSize(0.035)
@@ -235,7 +243,12 @@ def main(
             labels_left, labels_top, "#scale[1.2]{#bf{#it{ATLAS}}}"
         )
 
-    plot.canvas.Update()
+    if logy:
+        ROOT.gPad.RedrawAxis()
+        plot.canvas.SetTicks()
+        plot.canvas.SetLogy()
+        plot.canvas.Update()
+
     plot.decorateCanvas()
     plot.writePlot()
 

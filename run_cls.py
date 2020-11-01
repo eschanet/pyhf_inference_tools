@@ -13,15 +13,17 @@ def string_to_float(string):
 @click.option(
     "--group",
     default="1Lbb",
-    type=click.Choice(["1Lbb", "2L0J", "compressed"]),
+    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell"]),
 )
 @click.option('--simplified/--no-simplified', default=False)
 @click.option("--backend", default=None)
 @click.option("--optimizer", default=None)
 @click.option("--skip-to", default=None)
-def main(group, simplified, backend, optimizer, skip_to):
+@click.option("--include", default=None)
+def main(group, simplified, backend, optimizer, skip_to, include):
     found = False
-    filenames = pathlib.Path(f"./analyses/{group}/workspaces/").glob("*.json")
+    wildcard = "*.json" if not include else include
+    filenames = pathlib.Path(f"./analyses/{group}/workspaces/").glob(wildcard)
     for filename in filenames:
         if not skip_to:
             found = True
@@ -42,9 +44,11 @@ def main(group, simplified, backend, optimizer, skip_to):
             f"analyses/{group}/results/{'simplified_' if simplified else ''}{group}_{masses[0]}_{masses[1]}".replace(".", "p") + ".json"
         ]
         print(" ".join(cmd))
-        print(subprocess.check_output(cmd))
-
-
+        try:
+            print(subprocess.check_output(cmd))
+        except Exception as e: 
+            print(e)
+            
 if __name__ == "__main__":
     main()
 

@@ -17,7 +17,7 @@ def string_to_float(string):
 @click.option(
     "--group",
     default="1Lbb",
-    type=click.Choice(["1Lbb", "2L0J", "compressed"]),
+    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell"]),
 )
 @click.option(
     "--output-file",
@@ -25,6 +25,9 @@ def string_to_float(string):
     default=None,
 )
 def main(group, output_file):
+
+    pattern = re.compile("^/channels/[0-9]+/samples/[0-9]+$")
+
     ws = pyhf.Workspace(json.load(open(pathlib.Path(f"./analyses/{group}/likelihoods/BkgOnly.json"), "r")))
     patchset = pyhf.PatchSet(json.load(open(pathlib.Path(f"./analyses/{group}/likelihoods/patchset.json"), "r")))
 
@@ -36,10 +39,14 @@ def main(group, output_file):
 
         simplified_patch = {}
         simplified_patch['metadata'] = patch.metadata
-        # simplified_patch['name'] = patch.name
         simplified_patch['patch'] = []
-
+        
+        print(patch.name)
+        
         for p in patch.patch:
+            # we only need to grab patches that add signal yields
+            if not pattern.match(p['path']) or not p['op'] == 'add':
+                continue
             p['value']['modifiers'] = [
                 {
                     "data": None,
@@ -64,8 +71,8 @@ def main(group, output_file):
         with open(output_file, "w+") as out_file:
             json.dump(simplified_patchset, out_file, indent=4, sort_keys=True)
         click.echo("Written to {0:s}".format(output_file))
-        
-        
- 
+
+
+
 if __name__ == "__main__":
     main()

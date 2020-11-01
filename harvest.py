@@ -42,8 +42,8 @@ def make_harvest_from_result(result, masses):
         "failedp0": 0,
         "failedstatus": 0,
         "fitstatus": 0,
-        "x": masses[0],
-        "y": masses[1],
+        "m1": masses[0],
+        "m2": masses[1],
         "dm": masses[0] - masses[1],
         "mode": -1,
         "nexp": -1,
@@ -73,6 +73,7 @@ def make_harvest_from_result(result, masses):
             "compressed",
             "1Lbb",
             "2L0J",
+            "3Loffshell",
         ]
     ),
 )
