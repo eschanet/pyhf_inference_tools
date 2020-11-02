@@ -219,7 +219,7 @@ class contourPlotter:
         else:
             tmpLineLabel.DrawLatex(
                 coordinates[0] + 0.1 * (coordinates[2] - coordinates[0]),
-                coordinates[1] + 0.12 * (coordinates[3] - coordinates[1]),
+                coordinates[1] + 0.14 * (coordinates[3] - coordinates[1]),
                 label
             )
 

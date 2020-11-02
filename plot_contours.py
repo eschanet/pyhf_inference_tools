@@ -214,10 +214,10 @@ def main(
         process_label = "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow h #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; "
         text = "m(#tilde{#chi}^{#pm}_{1}/#tilde{#chi}^{0}_{2}) < m(#tilde{#chi}^{0}_{1}) + 125 GeV"
         plot.drawLine(
-            coordinates=[xmin, max(xmin - 125,ymin), min(xmax,ymax + 125), ymax],
+            coordinates=[125, 0, ymax+125, ymax],
             label=text,
             style=7,
-            angle=54
+            angle=57
         )
     elif group == '2L0J':
         process_label = "pp #rightarrow #tilde{#chi}^{#pm}_{1} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; "
