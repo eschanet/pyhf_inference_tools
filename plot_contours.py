@@ -123,6 +123,10 @@ def main(
     fullLH_file = ROOT.TFile(
         "analyses/{group}/graphs/pyhf_{group}_fullLH.root".format(group=group)
     )
+    bkgSignalLH = ROOT.TFile(
+        "analyses/{group}/graphs/pyhf_compressed_BkgSignal_simplifiedLH.root".
+        format(group=group)
+    )
     simplLH_file = ROOT.TFile(
         "analyses/{group}/graphs/pyhf_{group}_simplifiedLH.root".format(group=group)
     )
@@ -208,6 +212,24 @@ def main(
         color=color3,
         title='Simplified LH Obs.',
         legendOrder=5
+    )
+
+    plot.drawOneSigmaBand(
+        bkgSignalLH.Get("Band_1s_0"),
+        color=ROOT.TColor.GetColor("#a29bfe"),
+        lineColor=ROOT.TColor.GetColor("#a29bfe"),
+        alpha=0.3,
+        legendOrder=6,
+        title='Sig+Bkg LH Exp.'
+    )
+    plot.drawExpected(
+        bkgSignalLH.Get("Exp_0"), color=ROOT.TColor.GetColor("#a29bfe"), title=None, legendOrder=None
+    )
+    plot.drawObserved(
+        bkgSignalLH.Get("Obs_0"),
+        color=ROOT.TColor.GetColor("#a29bfe"),
+        title='Sig+Bkg LH Obs.',
+        legendOrder=7
     )
 
     if group == '1Lbb':

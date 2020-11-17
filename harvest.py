@@ -77,15 +77,17 @@ def make_harvest_from_result(result, masses):
         ]
     ),
 )
+@click.option("--include", default=None)
 @click.option('--simplified/--no-simplified', default=False)
 
-def main(group, simplified):
+def main(group, include, simplified):
     harvest = []
     signal_grid_results = {}
 
     match_base = group
 
-    filenames = pathlib.Path(f"./analyses/{group}/results/").glob(f"{'simplified_' if simplified else ''}{match_base}_*.json")
+    wildcard = "*.json" if not include else include
+    filenames = pathlib.Path(f"./analyses/{group}/results/").glob(f"{'simplified_' if simplified else ''}{match_base}{wildcard}")
 
     for filename in filenames:
         print(filename)
