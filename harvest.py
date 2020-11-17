@@ -68,18 +68,15 @@ def make_harvest_from_result(result, masses):
 @click.option(
     "--group",
     default="1Lbb",
-    type=click.Choice(
-        [
-            "compressed",
-            "1Lbb",
-            "2L0J",
-            "3Loffshell",
-        ]
-    ),
+    type=click.Choice([
+        "compressed",
+        "1Lbb",
+        "2L0J",
+        "3Loffshell",
+    ]),
 )
 @click.option("--include", default=None)
 @click.option('--simplified/--no-simplified', default=False)
-
 def main(group, include, simplified):
     harvest = []
     signal_grid_results = {}
@@ -87,7 +84,9 @@ def main(group, include, simplified):
     match_base = group
 
     wildcard = "*.json" if not include else include
-    filenames = pathlib.Path(f"./analyses/{group}/results/").glob(f"{'simplified_' if simplified else ''}{match_base}{wildcard}")
+    filenames = pathlib.Path(f"./analyses/{group}/results/").glob(
+        f"{'simplified_' if simplified else ''}{match_base}{wildcard}"
+    )
 
     for filename in filenames:
         print(filename)
@@ -95,9 +94,14 @@ def main(group, include, simplified):
         masses = filename_to_mass(filename)
         harvest.append(make_harvest_from_result(result, masses))
 
-    with pathlib.Path(f"./analyses/{group}/harvests/harvest_{'simplified_' if simplified else ''}{group}.json").open("w+") as output_file:
+    with pathlib.Path(
+        f"./analyses/{group}/harvests/harvest_{'simplified_' if simplified else ''}{group}.json"
+    ).open("w+") as output_file:
         json.dump(
-            harvest, output_file, sort_keys=True, indent=2,
+            harvest,
+            output_file,
+            sort_keys=True,
+            indent=2,
         )
 
 

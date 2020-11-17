@@ -128,7 +128,9 @@ def main(
         format(group=group)
     )
     simplLH_file = ROOT.TFile(
-        "analyses/{group}/graphs/pyhf_{group}_simplifiedLH.root".format(group=group)
+        "analyses/{group}/graphs/pyhf_{group}_simplifiedLH.root".format(
+            group=group
+        )
     )
 
     plot.drawAxes([xmin, ymin, xmax, ymax])
@@ -161,7 +163,7 @@ def main(
             alpha=0.6,
             angle=30,
             size=0.015,
-            yoffset=0.013*ymax,
+            yoffset=0.013 * ymax,
             format="%.1g",
             titlesize=0.03
         )
@@ -223,7 +225,10 @@ def main(
         title='Sig+Bkg LH Exp.'
     )
     plot.drawExpected(
-        bkgSignalLH.Get("Exp_0"), color=ROOT.TColor.GetColor("#a29bfe"), title=None, legendOrder=None
+        bkgSignalLH.Get("Exp_0"),
+        color=ROOT.TColor.GetColor("#a29bfe"),
+        title=None,
+        legendOrder=None
     )
     plot.drawObserved(
         bkgSignalLH.Get("Obs_0"),
@@ -236,7 +241,7 @@ def main(
         process_label = "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow h #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; "
         text = "m(#tilde{#chi}^{#pm}_{1}/#tilde{#chi}^{0}_{2}) < m(#tilde{#chi}^{0}_{1}) + 125 GeV"
         plot.drawLine(
-            coordinates=[125, 0, ymax+125, ymax],
+            coordinates=[125, 0, ymax + 125, ymax],
             label=text,
             style=7,
             angle=57

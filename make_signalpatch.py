@@ -33,7 +33,9 @@ def parse_number(text):
     help="Pattern of signal filenames to extract information from",
     default="{x:number}_{y:number}",
 )
-@click.option('--hepdata', help="hepdata record id, e.g. ins1234567", required=True)
+@click.option(
+    '--hepdata', help="hepdata record id, e.g. ins1234567", required=True
+)
 @click.option(
     '-a',
     '--algorithm',
@@ -50,11 +52,19 @@ def parse_number(text):
 )
 @click.option(
     "--output-file",
-    help="The location of the output json file. If not specified, prints to screen.",
+    help=
+    "The location of the output json file. If not specified, prints to screen.",
     default=None,
 )
-def main(signals, bkg_only, pattern, algorithms, description, hepdata, output_file):
-    patchset = {'metadata': {'description': description,}, 'patches': []}
+def main(
+    signals, bkg_only, pattern, algorithms, description, hepdata, output_file
+):
+    patchset = {
+        'metadata': {
+            'description': description,
+        },
+        'patches': []
+    }
 
     # add in analysis id if specified
     patchset['metadata']['references'] = {'hepdata': hepdata}
@@ -66,10 +76,9 @@ def main(signals, bkg_only, pattern, algorithms, description, hepdata, output_fi
     }
     click.echo("Background-only digests:")
     click.echo(
-        '\t'
-        + json.dumps(patchset['metadata']['digests'], indent=4, sort_keys=True).replace(
-            '\n', '\n\t'
-        )
+        '\t' +
+        json.dumps(patchset['metadata']['digests'], indent=4, sort_keys=True
+                   ).replace('\n', '\n\t')
     )
 
     p = parse.compile(pattern, dict(number=parse_number))
@@ -96,7 +105,13 @@ def main(signals, bkg_only, pattern, algorithms, description, hepdata, output_fi
             click.echo(f"Patch failure for: {signal.name}")
             sys.exit(1)
         patchset['patches'].append(
-            {'metadata': {'name': signal_name, 'values': values}, 'patch': patch.patch}
+            {
+                'metadata': {
+                    'name': signal_name,
+                    'values': values
+                },
+                'patch': patch.patch
+            }
         )
 
     click.echo("Done. Validating patchset structure against schema.")

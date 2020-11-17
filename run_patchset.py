@@ -10,8 +10,10 @@ import pyhf
 
 pattern = re.compile("(\d+(?:p[05])?)_(\d+(?:p[05])?)")
 
+
 def string_to_float(string):
     return float(string.replace("p", "."))
+
 
 @click.command()
 @click.option(
@@ -29,10 +31,16 @@ def main(group, simplified, likelihood, patchset, backend, optimizer, skip_to):
 
     pyhf.set_backend(backend, optimizer)
 
-    bkgOnly = likelihood if not simplified else "simplified_"+likelihood
+    bkgOnly = likelihood if not simplified else "simplified_" + likelihood
     print(bkgOnly)
-    patchset = patchset if not simplified else "simplified_"+patchset
-    ws = pyhf.Workspace(json.load(open(pathlib.Path(f"./analyses/{group}/likelihoods/{bkgOnly}"), "r")))
+    patchset = patchset if not simplified else "simplified_" + patchset
+    ws = pyhf.Workspace(
+        json.load(
+            open(
+                pathlib.Path(f"./analyses/{group}/likelihoods/{bkgOnly}"), "r"
+            )
+        )
+    )
     patchset = pyhf.PatchSet(
         json.load(
             open(
@@ -45,19 +53,38 @@ def main(group, simplified, likelihood, patchset, backend, optimizer, skip_to):
         print(patch.name)
         try:
             pdf = ws.model(
-                patches = [patch],
-                modifier_settings = {'normsys': {'interpcode': 'code4'},'histosys': {'interpcode': 'code4p'}}
+                patches=[patch],
+                modifier_settings={
+                    'normsys': {
+                        'interpcode': 'code4'
+                    },
+                    'histosys': {
+                        'interpcode': 'code4p'
+                    }
+                }
             )
 
             CLs_obs, CLs_exp_band = pyhf.infer.hypotest(
                 1.0, ws.data(pdf), pdf, qtilde=True, return_expected_set=True
             )
-            obsCLs, expCLs = pyhf.infer.hypotest(1.0,ws.data(pdf), pdf, qtilde=True, return_expected_set=True)
-            with open(pathlib.Path(f"analyses/{group}/results/{'simplified_' if simplified else ''}{group}_{patch.name}.json"), "w") as fp:
-                json.dump({"CLs_exp":[float(i.tolist()) for i in expCLs], "CLs_obs":obsCLs.tolist()}, fp)
+            obsCLs, expCLs = pyhf.infer.hypotest(
+                1.0, ws.data(pdf), pdf, qtilde=True, return_expected_set=True
+            )
+            with open(
+                pathlib.Path(
+                    f"analyses/{group}/results/{'simplified_' if simplified else ''}{group}_{patch.name}.json"
+                ), "w"
+            ) as fp:
+                json.dump(
+                    {
+                        "CLs_exp": [float(i.tolist()) for i in expCLs],
+                        "CLs_obs": obsCLs.tolist()
+                    }, fp
+                )
 
         except Exception as e:
             print(e)
+
 
 if __name__ == "__main__":
     main()

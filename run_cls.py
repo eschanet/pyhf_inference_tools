@@ -6,8 +6,10 @@ import re
 
 pattern = re.compile("(\d+(?:p[05])?)_(\d+(?:p[05])?)")
 
+
 def string_to_float(string):
     return float(string.replace("p", "."))
+
 
 @click.command()
 @click.option(
@@ -35,21 +37,22 @@ def main(group, simplified, backend, optimizer, skip_to, include):
                 continue
         match = pattern.search(filename.name)
         assert match
-        masses = string_to_float(match.group(1)), string_to_float(match.group(2))
+        masses = string_to_float(match.group(1)
+                                 ), string_to_float(match.group(2))
         cmd = [
             "time", "pyhf", "cls",
             str(filename), *(["--backend", backend] if backend else []),
             *(["--optimizer", optimizer] if optimizer else []),
             "--output-file",
-            f"analyses/{group}/results/{'simplified_' if simplified else ''}{group}_{masses[0]}_{masses[1]}".replace(".", "p") + ".json"
+            f"analyses/{group}/results/{'simplified_' if simplified else ''}{group}_{masses[0]}_{masses[1]}"
+            .replace(".", "p") + ".json"
         ]
         print(" ".join(cmd))
         try:
             print(subprocess.check_output(cmd))
-        except Exception as e: 
+        except Exception as e:
             print(e)
-            
+
+
 if __name__ == "__main__":
     main()
-
-
