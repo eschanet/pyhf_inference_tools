@@ -3,11 +3,10 @@
 # pylint: disable=import-error
 import ROOT
 print(ROOT.gROOT.GetVersion())
-# pylint: enable=import-error
 
 import contourPlotter
 import click
-
+import math
 
 @click.command()
 @click.option(
@@ -16,9 +15,18 @@ import click
     type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell"]),
 )
 @click.option(
-    "--is-simplified/--not-simplified",
-    default=False,
-    help="Results from simplified LH?",
+    '--contour',
+    '-c',
+    default=[],
+    multiple=True,
+    help="Contours to plot",
+)
+@click.option(
+    '--contour-label',
+    '-l',
+    default=[],
+    multiple=True,
+    help="Label of the contour",
 )
 @click.option("--width", type=int, default=1600, help="Width of canvas")
 @click.option("--height", type=int, default=1200, help="Height of canvas")
@@ -89,7 +97,8 @@ import click
 @click.option("--luminosity", type=float, default=139000)
 def main(
     group,
-    is_simplified,
+    contour,
+    contour_label,
     width,
     height,
     comenergy,
@@ -120,122 +129,64 @@ def main(
     plot.canvas.SetLeftMargin(0.15)
     plot.canvas.SetBottomMargin(0.10)
 
-    fullLH_file = ROOT.TFile(
-        "analyses/{group}/graphs/pyhf_{group}_fullLH.root".format(group=group)
-    )
-    bkgSignalLH = ROOT.TFile(
-        "analyses/{group}/graphs/pyhf_compressed_BkgSignal_simplifiedLH.root".
-        format(group=group)
-    )
-    simplLH_file = ROOT.TFile(
-        "analyses/{group}/graphs/pyhf_{group}_simplifiedLH.root".format(
-            group=group
-        )
-    )
 
     plot.drawAxes([xmin, ymin, xmax, ymax])
 
-    # plot.drawOneSigmaBand(tfile.Get("Band_1s_0"), color=ROOT.TColor.GetColor("#ff7300"), lineColor=ROOT.TColor.GetColor("#c24c00"), title = label1+' Exp.', legendOrder=0)
-    # plot.drawExpected(tfile.Get("Exp_0"),color=ROOT.TColor.GetColor("#c24c00"))
-    # plot.drawObserved(tfile.Get("Obs_0"),color=ROOT.TColor.GetColor("#ff7300"), title = label1+' Obs. (#pm1 #sigma_{theory}^{SUSY})', legendOrder=1)
-    # plot.drawTheoryUncertaintyCurve(tfile.Get("Obs_0_Up"),color=ROOT.TColor.GetColor("#c24c00"))
-    # plot.drawTheoryUncertaintyCurve(tfile.Get("Obs_0_Down"),color=ROOT.TColor.GetColor("#c24c00"))
-    # plot.drawTheoryLegendLines( xyCoord=(0.2305,0.721),color=ROOT.TColor.GetColor("#c24c00"), length=0.045 )
-
     color1 = ROOT.TColor.GetColor("#e67e22")
-    color2 = ROOT.TColor.GetColor("#b2590c")
-    color3 = ROOT.TColor.GetColor("#07a7ec")
-    color4 = ROOT.TColor.GetColor("#0475a5")
+    color2 = ROOT.TColor.GetColor("#07a7ec")
+    color3 = ROOT.TColor.GetColor("#0475a5")
+    color4 = ROOT.TColor.GetColor("#9b59b6")
+
+    colors = [color1, color2, color3, color4]
+    i = 0
+    for idx, (cnt, label, color) in enumerate(zip(contour, contour_label, colors)):
+        f = ROOT.TFile(
+            "analyses/{group}/graphs/{cnt}".format(group=group, cnt=cnt)
+        )
+
+        i += 1
+        plot.drawOneSigmaBand(
+            f.Get("Band_1s_0"),
+            color=color,
+            lineColor=color,
+            alpha=0.3,
+            legendOrder=i,
+            title=label + ' Exp.'
+        )
+        plot.drawExpected(
+            f.Get("Exp_0"), color=color, title=None, legendOrder=None
+        )
+
+        i += 1
+        plot.drawObserved(
+            f.Get("Obs_0"),
+            color=color,
+            title=label + ' Obs.',
+            legendOrder=i
+        )
+
+        if draw_cls:
+            yoffset = 0.013 * ymax * (-1)**idx * math.floor(0.5*idx+1)
+            print(yoffset)
+            plot.drawTextFromTGraph2D(
+                f.Get("CLs_gr"),
+                title="",
+                color=color,
+                alpha=0.6,
+                angle=30,
+                size=0.015,
+                yoffset=yoffset,
+                format="%.1g",
+                titlesize=0.03
+            )
 
     if draw_cls:
-
         plot.drawTextFromTGraph2D(
-            simplLH_file.Get("CLs_gr"),
+            f.Get("CLs_gr"),
             title="Coloured numbers represent observed CLs",
             size=0.0,
             alpha=0.4,
         )
-
-        plot.drawTextFromTGraph2D(
-            fullLH_file.Get("CLs_gr"),
-            title="",
-            color=color2,
-            alpha=0.6,
-            angle=30,
-            size=0.015,
-            yoffset=0.013 * ymax,
-            format="%.1g",
-            titlesize=0.03
-        )
-
-        plot.drawTextFromTGraph2D(
-            simplLH_file.Get("CLs_gr"),
-            title="",
-            color=color4,
-            alpha=0.6,
-            angle=30,
-            size=0.015,
-            yoffset=-0.013 * ymax,
-            format="%.1g",
-            titlesize=0.03
-        )
-
-    plot.drawOneSigmaBand(
-        fullLH_file.Get("Band_1s_0"),
-        color=color1,
-        lineColor=color1,
-        alpha=0.3,
-        legendOrder=2,
-        title='Full LH Exp.'
-    )
-    plot.drawExpected(
-        fullLH_file.Get("Exp_0"), color=color1, title=None, legendOrder=None
-    )
-    plot.drawObserved(
-        fullLH_file.Get("Obs_0"),
-        color=color1,
-        title='Full LH Obs.',
-        legendOrder=3
-    )
-
-    plot.drawOneSigmaBand(
-        simplLH_file.Get("Band_1s_0"),
-        color=color3,
-        lineColor=color3,
-        alpha=0.3,
-        legendOrder=4,
-        title='Simplified LH Exp.'
-    )
-    plot.drawExpected(
-        simplLH_file.Get("Exp_0"), color=color3, title=None, legendOrder=None
-    )
-    plot.drawObserved(
-        simplLH_file.Get("Obs_0"),
-        color=color3,
-        title='Simplified LH Obs.',
-        legendOrder=5
-    )
-
-    plot.drawOneSigmaBand(
-        bkgSignalLH.Get("Band_1s_0"),
-        color=ROOT.TColor.GetColor("#a29bfe"),
-        lineColor=ROOT.TColor.GetColor("#a29bfe"),
-        alpha=0.3,
-        legendOrder=6,
-        title='Sig+Bkg LH Exp.'
-    )
-    plot.drawExpected(
-        bkgSignalLH.Get("Exp_0"),
-        color=ROOT.TColor.GetColor("#a29bfe"),
-        title=None,
-        legendOrder=None
-    )
-    plot.drawObserved(
-        bkgSignalLH.Get("Obs_0"),
-        color=ROOT.TColor.GetColor("#a29bfe"),
-        title='Sig+Bkg LH Obs.',
-        legendOrder=7
-    )
 
     if group == '1Lbb':
         process_label = "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow h #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; "
@@ -275,8 +226,6 @@ def main(
     )
     legend.SetTextSize(0.035)
     legend.Draw()
-
-    # plot.drawLabel(label="v1.0.0")
 
     # plot.drawTheoryUncertaintyCurve( f.Get("Obs_0_Up") )
     # plot.drawTheoryUncertaintyCurve( f.Get("Obs_0_Down") )
