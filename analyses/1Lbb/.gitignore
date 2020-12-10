@@ -1,5 +1,6 @@
 workspaces/
 graphs/
+truth/
 results/
 likelihoods/
 *.root

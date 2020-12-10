@@ -47554,7 +47554,7 @@
                         "inits": [
                             1.0
                         ],
-                        "name": "mu_SIG"
+                        "name": "mu_Sig"
                     },
                     {
                         "bounds": [
@@ -47600,7 +47600,7 @@
                         "name": "mu_BG"
                     }
                 ],
-                "poi": "mu_SIG"
+                "poi": "mu_Sig"
             },
             "name": "NormalMeasurement"
         }
