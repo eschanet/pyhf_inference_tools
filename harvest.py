@@ -85,7 +85,7 @@ def main(group, include, simplified):
 
     wildcard = "*.json" if not include else include
     filenames = pathlib.Path(f"./analyses/{group}/results/").glob(
-        f"{'simplified_' if simplified else ''}{match_base}{wildcard}"
+        f"{'simplified_' if simplified else ''}{wildcard}"
     )
 
     for filename in filenames:

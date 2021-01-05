@@ -143,7 +143,6 @@ def main(
         f = ROOT.TFile(
             "analyses/{group}/graphs/{cnt}".format(group=group, cnt=cnt)
         )
-
         i += 1
         plot.drawOneSigmaBand(
             f.Get("Band_1s_0"),

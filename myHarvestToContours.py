@@ -136,10 +136,6 @@ def main():
 		print ("")
 
 	if not args.forbiddenFunction:
-<<<<<<< HEAD
-=======
-		args.forbiddenFunction = 'gridx' if args.gridx else 'x+5'
->>>>>>> 10d8a9a1580fd7ad7c401b538ed3f059220c64ff
 		print ("")
 		print (">>> ******************** WARNING ***************************")
 		print (">>> ** Setting a kinematically forbidden line for you     **")
