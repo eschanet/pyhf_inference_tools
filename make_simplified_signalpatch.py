@@ -27,7 +27,9 @@ def string_to_float(string):
     "The location of the output json file. If not specified, prints to screen.",
     default=None,
 )
-def main(group, output_file):
+@click.option("--signal-uncertainties", default=0.0)
+
+def main(group, output_file, signal_uncertainties):
 
     pattern = re.compile("^/channels/[0-9]+/samples/[0-9]+$")
 
@@ -64,6 +66,8 @@ def main(group, output_file):
             # we only need to grab patches that add signal yields
             if not pattern.match(p['path']) or not p['op'] == 'add':
                 continue
+
+            print(p['value']['data'])
             p['value']['modifiers'] = [
                 {
                     "data": None,
@@ -75,6 +79,15 @@ def main(group, output_file):
                     "type": "normfactor"
                 }
             ]
+            if signal_uncertainties > 0.0:
+                p['value']['modifiers'].append({
+                    "data" : {   
+                        "hi_data": (np.asarray(p['value']['data']) + np.asarray(p['value']['data']) * signal_uncertainties).tolist(),
+                        "lo_data": (np.asarray(p['value']['data']) - np.asarray(p['value']['data']) * signal_uncertainties).clip(min=0).tolist(),
+                    }, 
+                    "name": "flatError",
+                    "type": "histosys"
+                })
             p['path'] = p['path'].split('samples/')[0] + 'samples/1'
             simplified_patch['patch'].append(p)
         simplified_patchset['patches'].append(simplified_patch)
