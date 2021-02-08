@@ -134,11 +134,12 @@ def main(
 
     color1 = ROOT.TColor.GetColor("#e67e22")
     color2 = ROOT.TColor.GetColor("#07a7ec")
-    color3 = ROOT.TColor.GetColor("#0475a5")
-    color4 = ROOT.TColor.GetColor("#9b59b6")
+    color3 = ROOT.TColor.GetColor("#8e44ad")
+    color4 = ROOT.TColor.GetColor("#e74c3c")
 
     colors = [color1, color2, color3, color4]
     i = 0
+    yoffset = 0
     for idx, (cnt, label, color) in enumerate(zip(contour, contour_label, colors)):
         f = ROOT.TFile(
             "analyses/{group}/graphs/{cnt}".format(group=group, cnt=cnt)
@@ -165,8 +166,6 @@ def main(
         )
 
         if draw_cls:
-            yoffset = 0.013 * ymax * (-1)**idx * math.floor(0.5*idx+1)
-            print(yoffset)
             plot.drawTextFromTGraph2D(
                 f.Get("CLs_gr"),
                 title="",
@@ -178,6 +177,8 @@ def main(
                 format="%.1g",
                 titlesize=0.03
             )
+            yoffset = 0.017 * ymax * (-1)**idx * math.floor(0.5*idx+1)
+
 
     if draw_cls:
         plot.drawTextFromTGraph2D(

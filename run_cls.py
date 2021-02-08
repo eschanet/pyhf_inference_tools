@@ -11,25 +11,30 @@ from time import time
 
 pattern = re.compile("(\d+(?:p[05])?)_(\d+(?:p[05])?)")
 
-def timing(f):
+total_time = []
+
+def timeit(f):
     @wraps(f)
-    def wrap(*args, **kw):
-        ts = time()
-        result = f(*args, **kw)
-        te = time()
-        print('func:%r args:[%r, %r] took: %2.4f sec' % (f.__name__, args, kw, te-ts))
+    def wrapper(*args, **kwargs):
+        start = time()
+        result = f(*args, **kwargs)
+        end = time()
+        total_time.append((end - start))
         return result
-    return wrap
+    return wrapper
 
 def string_to_float(string):
     return float(string.replace("p", "."))
 
-@timing
-def run_fit(filename, prune_channel, prune_modifier, prune_modifier_type, prune_sample):
+@timeit
+def create_ws(filename, prune_channel, prune_modifier, prune_modifier_type, prune_sample):
     ws = pyhf.Workspace(json.load(open(pathlib.Path(str(filename)), "r")))
     ws = ws.prune(modifiers=prune_modifier,modifier_types=prune_modifier_type,samples=prune_sample,channels=prune_channel)
+    return ws
 
-    pdf = ws.model(
+@timeit
+def create_pdf(ws):
+    return ws.model(
         modifier_settings={
             'normsys': {
                 'interpcode': 'code4'
@@ -40,6 +45,8 @@ def run_fit(filename, prune_channel, prune_modifier, prune_modifier_type, prune_
         }
     )
 
+@timeit
+def run_fit(ws, pdf):
     obsCLs, expCLs = pyhf.infer.hypotest(
         1.0, ws.data(pdf), pdf, qtilde=True, return_expected_set=True
     )
@@ -53,6 +60,7 @@ def run_fit(filename, prune_channel, prune_modifier, prune_modifier_type, prune_
     type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell"]),
 )
 @click.option('--simplified/--no-simplified', default=False)
+@click.option('--benchmark/--no-benchmark', default=False)
 @click.option("--backend", default="pytorch")
 @click.option(
     '--prune-channel',
@@ -77,11 +85,11 @@ def run_fit(filename, prune_channel, prune_modifier, prune_modifier_type, prune_
     default=[],
     multiple=True,
     help="Modifier to prune",
-)   
+) 
 @click.option("--optimizer", default="scipy")
 @click.option("--skip-to", default=None)
 @click.option("--include", default=None)
-def main(group, simplified, backend, prune_channel, prune_modifier, prune_modifier_type, prune_sample, optimizer, skip_to, include):
+def main(group, simplified, benchmark, backend, prune_channel, prune_modifier, prune_modifier_type, prune_sample, optimizer, skip_to, include):
 
     pyhf.set_backend(backend, optimizer)
 
@@ -102,10 +110,13 @@ def main(group, simplified, backend, prune_channel, prune_modifier, prune_modifi
         assert match
         masses = string_to_float(match.group(1)), string_to_float(match.group(2))
         
-        print(filename)
+        if not benchmark:
+            click.echo(filename)
         
         try:
-            obsCLs, expCLs = run_fit(filename, prune_channel, prune_modifier, prune_modifier_type, prune_sample)
+            ws = create_ws(filename, prune_channel, prune_modifier, prune_modifier_type, prune_sample)
+            pdf = create_pdf(ws)
+            obsCLs, expCLs = run_fit(ws, pdf)
             with open(
                 pathlib.Path(
                     f"analyses/{group}/results/{'simplified_' if simplified else ''}{group}_{match.group(1)}_{match.group(2)}.json"
@@ -119,6 +130,11 @@ def main(group, simplified, backend, prune_channel, prune_modifier, prune_modifi
                 )
         except Exception as e:
             print(e)
+        
+        total_time.insert(0,sum(total_time))
+        if benchmark:
+            print(*total_time, sep = " ")
+        total_time.clear()
 
 if __name__ == "__main__":
     main()
