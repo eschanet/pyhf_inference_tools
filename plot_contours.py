@@ -12,7 +12,7 @@ import math
 @click.option(
     "--group",
     default="1Lbb",
-    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell"]),
+    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell", "stop1L"]),
 )
 @click.option(
     '--contour',
@@ -57,7 +57,7 @@ import math
 @click.option("--ymax", type=float, default=700, help="y-axis maximum")
 @click.option(
     "--is-internal/--not-internal",
-    default=True,
+    default=False,
     help="Is this ATLAS Internal?"
 )
 @click.option(
@@ -88,6 +88,11 @@ import math
     help="Draw CLs numbers on plot",
 )
 @click.option(
+    "--draw-ATLAS/--no-ATLAS",
+    default=False,
+    help="Draw ATLAS label",
+)
+@click.option(
     "--process-label",
     type=str,
     default=
@@ -116,6 +121,7 @@ def main(
     logy,
     process_label,
     draw_cls,
+    draw_atlas,
     luminosity,
 ):
 
@@ -207,6 +213,16 @@ def main(
             angle=54
         )
 
+    elif group == 'stop1L':
+        process_label = "pp #rightarrow #tilde{t}_{1} #tilde{t}_{1} ; #tilde{t}_{1} #rightarrow bff #tilde{#chi}^{0}_{1}, #tilde{t}_{1} #rightarrow bW #tilde{#chi}^{0}_{1}, #tilde{t}_{1} #rightarrow t #tilde{#chi}^{0}_{1} ; "
+        text = "m(#tilde{t}_{1}) < m(#tilde{#chi}^{0}_{1}) + m(t)"
+        plot.drawLine(
+            coordinates=[xmin, xmin - 173, ymax + 173, ymax],
+            label=text,
+            style=7,
+            angle=45
+        )
+
     ## Axis Labels
     plot.setXAxisLabel(xlabel)
     plot.setYAxisLabel(ylabel)
@@ -252,15 +268,15 @@ def main(
     )
 
     latexObject.SetTextSize(0.041)
-    if is_internal:
+    if is_internal and draw_atlas:
         latexObject.DrawLatexNDC(
             labels_left, labels_top, "#scale[1.2]{#bf{#it{ATLAS}} Internal}"
         )
-    elif is_preliminary:
+    elif is_preliminary and draw_atlas:
         latexObject.DrawLatexNDC(
             labels_left, labels_top, "#scale[1.2]{#bf{#it{ATLAS}} Preliminary}"
         )
-    else:
+    elif draw_atlas:
         latexObject.DrawLatexNDC(
             labels_left, labels_top, "#scale[1.2]{#bf{#it{ATLAS}}}"
         )
