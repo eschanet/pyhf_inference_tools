@@ -73,6 +73,7 @@ def make_harvest_from_result(result, masses):
         "1Lbb",
         "2L0J",
         "3Loffshell",
+        "stop1L",
     ]),
 )
 @click.option("--include", default=None)
