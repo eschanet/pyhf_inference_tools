@@ -1,0 +1,1058 @@
+{
+    "channels": [
+        {
+            "name": "SRhigh_0Jb_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        1.5997492223501157
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    2.1927104315135466
+                                ],
+                                "lo_data": [
+                                    1.006788013186685
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_0Jc_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        4.403358196882474
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    5.343610463984136
+                                ],
+                                "lo_data": [
+                                    3.4631059297808116
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_0Jd_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        15.5938400022744
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    17.6078903221164
+                                ],
+                                "lo_data": [
+                                    13.579789682432398
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_0Je_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        12.552049970596226
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    14.557584996228503
+                                ],
+                                "lo_data": [
+                                    10.546514944963949
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_0Jf1_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        36.91030297426134
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    39.997245572914984
+                                ],
+                                "lo_data": [
+                                    33.8233603756077
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_0Jf2_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        25.176917705899385
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    27.202371280186394
+                                ],
+                                "lo_data": [
+                                    23.151464131612375
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_0Jg1_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        41.15465657022074
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    43.938515663853394
+                                ],
+                                "lo_data": [
+                                    38.37079747658808
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_0Jg2_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        19.349470642448562
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    22.32873032710117
+                                ],
+                                "lo_data": [
+                                    16.370210957795955
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_nJa_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        4.857636568515194
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    6.047984123681306
+                                ],
+                                "lo_data": [
+                                    3.667289013349083
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_nJb_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        1.3827879316846976
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    1.8936729072894254
+                                ],
+                                "lo_data": [
+                                    0.8719029560799698
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_nJc_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        1.6021826376948403
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    2.067307726765115
+                                ],
+                                "lo_data": [
+                                    1.1370575486245653
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_nJd_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        3.872373279756797
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    4.566220266036684
+                                ],
+                                "lo_data": [
+                                    3.17852629347691
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_nJe_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        2.3140095569673496
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    2.9347430487889965
+                                ],
+                                "lo_data": [
+                                    1.6932760651457026
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_nJf_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        10.319882163572265
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    13.220036670474983
+                                ],
+                                "lo_data": [
+                                    7.419727656669547
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRhigh_nJg_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        6.283198062263054
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    7.295306623783118
+                                ],
+                                "lo_data": [
+                                    5.27108950074299
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_0Jb_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        33.6046827909625
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    36.59241159004069
+                                ],
+                                "lo_data": [
+                                    30.61695399188431
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_0Jc_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        45.787225900607076
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    48.844845346389846
+                                ],
+                                "lo_data": [
+                                    42.72960645482431
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_0Jd_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        58.63134675174119
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    62.43786548967526
+                                ],
+                                "lo_data": [
+                                    54.82482801380712
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_0Je_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        99.35362291346271
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    104.39133665480367
+                                ],
+                                "lo_data": [
+                                    94.31590917212176
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_0Jf1_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        32.300382522247084
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    34.99450062359409
+                                ],
+                                "lo_data": [
+                                    29.60626442090007
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_0Jf2_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        5.863762899714054
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    6.58797392997341
+                                ],
+                                "lo_data": [
+                                    5.1395518694546976
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_0Jg1_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        35.50581120655286
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    38.65832022090931
+                                ],
+                                "lo_data": [
+                                    32.353302192196416
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_0Jg2_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        5.928186675700251
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    6.904233519536799
+                                ],
+                                "lo_data": [
+                                    4.952139831863702
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_nJb_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        3.5782326140708123
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    4.161005195487971
+                                ],
+                                "lo_data": [
+                                    2.9954600326536536
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_nJc_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        10.308036016246614
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    11.717074312105158
+                                ],
+                                "lo_data": [
+                                    8.89899772038807
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_nJd_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        16.22849009231542
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    18.279542460021425
+                                ],
+                                "lo_data": [
+                                    14.177437724609414
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_nJe_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        18.12530619388009
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    20.90326800816027
+                                ],
+                                "lo_data": [
+                                    15.347344379599905
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_nJf1_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        24.95050231912024
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    27.270230199238462
+                                ],
+                                "lo_data": [
+                                    22.630774439002018
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_nJf2_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        19.51847003097138
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    21.272059651118454
+                                ],
+                                "lo_data": [
+                                    17.764880410824304
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_nJg1_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        21.313818320952944
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    23.993901746773933
+                                ],
+                                "lo_data": [
+                                    18.633734895131955
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SRlow_nJg2_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        13.305294588946769
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    14.86641271252242
+                                ],
+                                "lo_data": [
+                                    11.744176465371117
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "CR_0J_WZ_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        5238.825840934164
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    5311.457094026594
+                                ],
+                                "lo_data": [
+                                    5166.194587841735
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "CR_nJ_WZ_cuts",
+            "samples": [
+                {
+                    "name": "Bkg",
+                    "data": [
+                        3251.597495707198
+                    ],
+                    "modifiers": [
+                        {
+                            "data": {
+                                "hi_data": [
+                                    3310.4681224177025
+                                ],
+                                "lo_data": [
+                                    3192.7268689966936
+                                ]
+                            },
+                            "name": "totalError",
+                            "type": "histosys"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "measurements": [
+        {
+            "name": "NormalMeasurement",
+            "config": {
+                "parameters": [
+                    {
+                        "auxdata": [
+                            1.0
+                        ],
+                        "bounds": [
+                            [
+                                0.915,
+                                1.085
+                            ]
+                        ],
+                        "inits": [
+                            1.0
+                        ],
+                        "name": "lumi",
+                        "sigmas": [
+                            0.017
+                        ]
+                    }
+                ],
+                "poi": "mu_Sig"
+            }
+        }
+    ],
+    "observations": [
+        {
+            "data": [
+                1.0
+            ],
+            "name": "SRhigh_0Jb_cuts"
+        },
+        {
+            "data": [
+                4.0
+            ],
+            "name": "SRhigh_0Jc_cuts"
+        },
+        {
+            "data": [
+                11.0
+            ],
+            "name": "SRhigh_0Jd_cuts"
+        },
+        {
+            "data": [
+                13.0
+            ],
+            "name": "SRhigh_0Je_cuts"
+        },
+        {
+            "data": [
+                36.0
+            ],
+            "name": "SRhigh_0Jf1_cuts"
+        },
+        {
+            "data": [
+                15.0
+            ],
+            "name": "SRhigh_0Jf2_cuts"
+        },
+        {
+            "data": [
+                42.0
+            ],
+            "name": "SRhigh_0Jg1_cuts"
+        },
+        {
+            "data": [
+                18.0
+            ],
+            "name": "SRhigh_0Jg2_cuts"
+        },
+        {
+            "data": [
+                3.0
+            ],
+            "name": "SRhigh_nJa_cuts"
+        },
+        {
+            "data": [
+                2.0
+            ],
+            "name": "SRhigh_nJb_cuts"
+        },
+        {
+            "data": [
+                2.0
+            ],
+            "name": "SRhigh_nJc_cuts"
+        },
+        {
+            "data": [
+                2.0
+            ],
+            "name": "SRhigh_nJd_cuts"
+        },
+        {
+            "data": [
+                2.0
+            ],
+            "name": "SRhigh_nJe_cuts"
+        },
+        {
+            "data": [
+                12.0
+            ],
+            "name": "SRhigh_nJf_cuts"
+        },
+        {
+            "data": [
+                5.0
+            ],
+            "name": "SRhigh_nJg_cuts"
+        },
+        {
+            "data": [
+                25.0
+            ],
+            "name": "SRlow_0Jb_cuts"
+        },
+        {
+            "data": [
+                41.0
+            ],
+            "name": "SRlow_0Jc_cuts"
+        },
+        {
+            "data": [
+                77.0
+            ],
+            "name": "SRlow_0Jd_cuts"
+        },
+        {
+            "data": [
+                102.0
+            ],
+            "name": "SRlow_0Je_cuts"
+        },
+        {
+            "data": [
+                33.0
+            ],
+            "name": "SRlow_0Jf1_cuts"
+        },
+        {
+            "data": [
+                7.0
+            ],
+            "name": "SRlow_0Jf2_cuts"
+        },
+        {
+            "data": [
+                33.0
+            ],
+            "name": "SRlow_0Jg1_cuts"
+        },
+        {
+            "data": [
+                9.0
+            ],
+            "name": "SRlow_0Jg2_cuts"
+        },
+        {
+            "data": [
+                6.0
+            ],
+            "name": "SRlow_nJb_cuts"
+        },
+        {
+            "data": [
+                13.0
+            ],
+            "name": "SRlow_nJc_cuts"
+        },
+        {
+            "data": [
+                18.0
+            ],
+            "name": "SRlow_nJd_cuts"
+        },
+        {
+            "data": [
+                14.0
+            ],
+            "name": "SRlow_nJe_cuts"
+        },
+        {
+            "data": [
+                25.0
+            ],
+            "name": "SRlow_nJf1_cuts"
+        },
+        {
+            "data": [
+                23.0
+            ],
+            "name": "SRlow_nJf2_cuts"
+        },
+        {
+            "data": [
+                23.0
+            ],
+            "name": "SRlow_nJg1_cuts"
+        },
+        {
+            "data": [
+                13.0
+            ],
+            "name": "SRlow_nJg2_cuts"
+        },
+        {
+            "data": [
+                5244.0
+            ],
+            "name": "CR_0J_WZ_cuts"
+        },
+        {
+            "data": [
+                3250.0
+            ],
+            "name": "CR_nJ_WZ_cuts"
+        }
+    ],
+    "version": "1.0.0"
+}
