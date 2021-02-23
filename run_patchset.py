@@ -20,7 +20,7 @@ def string_to_float(string):
 @click.option(
     "--group",
     default="1Lbb",
-    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell", "stop1L"]),
+    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell", "stop1L", "3LRJR", "directstaus", "samesign", "sbottom"]),
 )
 @click.option('--simplified/--no-simplified', default=False)
 @click.option(
