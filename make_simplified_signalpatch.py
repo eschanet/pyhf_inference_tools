@@ -19,42 +19,44 @@ def string_to_float(string):
 @click.option(
     "--group",
     default="1Lbb",
-    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell"]),
+    type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell", "stop1L", "3LRJR", "directstaus", "samesign", "sbottom"]),
 )
+@click.option("--likelihood", default="BkgOnly.json")
+@click.option("--patchset", default="patchset.json")
 @click.option(
-    "--output-file",
+    "--output-file", "-o",
     help=
     "The location of the output json file. If not specified, prints to screen.",
-    default=None,
+    default="simplified_patchset.json",
 )
 @click.option("--signal-uncertainties", default=0.0)
 
-def main(group, output_file, signal_uncertainties):
+def main(group, likelihood, patchset, output_file, signal_uncertainties):
 
     pattern = re.compile("^/channels/[0-9]+/samples/[0-9]+$")
 
     ws = pyhf.Workspace(
         json.load(
             open(
-                pathlib.Path(f"./analyses/{group}/likelihoods/BkgOnly.json"),
+                pathlib.Path(f"./analyses/{group}/likelihoods/{likelihood}"),
                 "r"
             )
         )
     )
-    patchset = pyhf.PatchSet(
+    _patchset = pyhf.PatchSet(
         json.load(
             open(
-                pathlib.Path(f"./analyses/{group}/likelihoods/patchset.json"),
+                pathlib.Path(f"./analyses/{group}/likelihoods/{patchset}"),
                 "r"
             )
         )
     )
 
     simplified_patchset = {}
-    simplified_patchset['metadata'] = patchset.metadata
-    simplified_patchset['version'] = patchset.version
+    simplified_patchset['metadata'] = _patchset.metadata
+    simplified_patchset['version'] = _patchset.version
     simplified_patchset['patches'] = []
-    for patch in patchset:
+    for patch in _patchset:
 
         simplified_patch = {}
         simplified_patch['metadata'] = patch.metadata
@@ -95,7 +97,7 @@ def main(group, output_file, signal_uncertainties):
     if output_file is None:
         click.echo(json.dumps(simplified_patchset, indent=4, sort_keys=True))
     else:
-        with open(output_file, "w+") as out_file:
+        with open(f"analyses/{group}/likelihoods/{output_file}", "w+") as out_file:
             json.dump(simplified_patchset, out_file, indent=4, sort_keys=True)
         click.echo("Written to {0:s}".format(output_file))
 
