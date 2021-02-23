@@ -31,38 +31,41 @@ def string_to_float(string):
     type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell"]),
 )
 @click.option("--backend", default="pytorch")
-# @click.option(
-#     '--prune-channel',
-#     default=[],
-#     multiple=True,
-#     help="Channel to prune",
-# )
-# @click.option(
-#     '--prune-modifier',
-#     default=[],
-#     multiple=True,
-#     help="Modifier to prune",
-# )
-# @click.option(
-#     '--prune-modifier-type',
-#     default=[],
-#     multiple=True,
-#     help="Modifier type to prune",
-# )
-# @click.option(
-#     '--prune-sample',
-#     default=[],
-#     multiple=True,
-#     help="Modifier to prune",
-# )   
+@click.option(
+    '--prune-channel',
+    default=[],
+    multiple=True,
+    help="Channel to prune",
+)
+@click.option(
+    '--prune-modifier',
+    default=[],
+    multiple=True,
+    help="Modifier to prune",
+)
+@click.option(
+    '--prune-modifier-type',
+    default=[],
+    multiple=True,
+    help="Modifier type to prune",
+)
+@click.option(
+    '--prune-sample',
+    default=[],
+    multiple=True,
+    help="Modifier to prune",
+)   
+@click.option('--simplified/--no-simplified', default=False)
 @click.option("--likelihood", default="BkgOnly.json")
 @click.option("--optimizer", default="scipy")
 @click.option("--patchname", default=None)
 @click.option("--lumi", default=139000)
 @click.option("--include", default=None)
-def main(group, backend, likelihood, optimizer, patchname, lumi, include):
+def main(group, backend, prune_channel, prune_modifier, prune_modifier_type, prune_sample, simplified, likelihood, optimizer, patchname, lumi, include):
 
     pyhf.set_backend(backend, optimizer)
+    likelihood = likelihood if not simplified else "simplified_"+likelihood
+
     spec = json.load(
         open(
             pathlib.Path(f"./analyses/{group}/likelihoods/{likelihood}"), "r"
@@ -98,7 +101,7 @@ def main(group, backend, likelihood, optimizer, patchname, lumi, include):
 
     found = False
     wildcard = "*C1*N2*.txt" if not include else include
-    filenames = pathlib.Path(f"./analyses/{group}/truth/").glob(wildcard)
+    filenames = pathlib.Path(f"./analyses/{group}/truth/without_btagging_scaling/").glob(wildcard)
 
     expectedEvents = collections.defaultdict(lambda: collections.defaultdict(lambda: None))
 
@@ -162,8 +165,11 @@ def main(group, backend, likelihood, optimizer, patchname, lumi, include):
                 },
             })
 
-        patched_spec = jsonpatch.apply_patch(spec, patches)            
+        patched_spec = jsonpatch.apply_patch(spec, patches)    
+
         ws = pyhf.Workspace(patched_spec)
+        ws = ws.prune(modifiers=prune_modifier,modifier_types=prune_modifier_type,samples=prune_sample,channels=prune_channel)
+
         pdf=ws.model(modifier_settings={'normsys': {'interpcode': 'code4'},'histosys': {'interpcode': 'code4p'}})
 
         print("Running " + point)
@@ -173,7 +179,7 @@ def main(group, backend, likelihood, optimizer, patchname, lumi, include):
         )
         with open(
             pathlib.Path(
-                f"analyses/{group}/results/truth_{group}_{point}.json"
+                f"analyses/{group}/results/truth_{'simplified_' if simplified else ''}{group}_{point}.json"
             ), "w"
         ) as fp:
             json.dump(
