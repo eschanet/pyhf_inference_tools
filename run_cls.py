@@ -133,7 +133,8 @@ def main(group, simplified, benchmark, backend, prune_channel, prune_modifier, p
         
         total_time.insert(0,sum(total_time))
         if benchmark:
-            print(*total_time, sep = " ")
+            # print(*total_time, sep = " ")
+            print(total_time[0])
         total_time.clear()
 
 if __name__ == "__main__":
