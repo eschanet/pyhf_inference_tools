@@ -101,7 +101,7 @@ def main(group, backend, prune_channel, prune_modifier, prune_modifier_type, pru
 
     found = False
     wildcard = "*C1*N2*.txt" if not include else include
-    filenames = pathlib.Path(f"./analyses/{group}/truth/without_btagging_scaling/").glob(wildcard)
+    filenames = pathlib.Path(f"./analyses/{group}/truth/").glob(wildcard)
 
     expectedEvents = collections.defaultdict(lambda: collections.defaultdict(lambda: None))
 
@@ -116,7 +116,7 @@ def main(group, backend, prune_channel, prune_modifier, prune_modifier_type, pru
         dsid_match = dsid_pattern.search(filename.name)
         assert dsid_match
         dsid = string_to_float(dsid_match.group(1))
-        xsec = xsecDB.xsecTimesEffTimeskFac(dsid)
+        xsec = xsecDB.xsecTimesEff(dsid)
 
         # print(filename)
 
@@ -132,7 +132,7 @@ def main(group, backend, prune_channel, prune_modifier, prune_modifier_type, pru
                     statError = math.sqrt(statError**2 + expectedEvents[point_match[0]][l[0]][1]**2)
                 expectedEvents[point_match[0]][l[0]] = (events,statError)
 
-    # pprint.pprint(expectedEvents["200p0_190p0"])
+    pprint.pprint(expectedEvents["700p0_150p0"])
 
     for point, events in expectedEvents.items():
         patches = []
@@ -140,29 +140,12 @@ def main(group, backend, prune_channel, prune_modifier, prune_modifier_type, pru
         for srName in patchDef['eff']:
             path = patchDef['jsonpath'][srName]
             expected = float(events[srName][0])
-            expected *= float(patchDef['eff'][srName])
+            # expected *= float(patchDef['eff'][srName])
 
             patches.append({
-                "op": "add",
-                "path": path.replace("/data/0",""),
-                "value": {
-                    "data": [
-                        expected
-                    ],
-                    "modifiers": [
-                        {
-                            "data": None,
-                            "name": "lumi",
-                            "type": "lumi"
-                        },
-                        {
-                            "data": None,
-                            "name": "mu_Sig",
-                            "type": "normfactor"
-                        }
-                    ],
-                    "name": filename.stem
-                },
+                "op": "replace",
+                "path": path,
+                "value": expected
             })
 
         patched_spec = jsonpatch.apply_patch(spec, patches)    
