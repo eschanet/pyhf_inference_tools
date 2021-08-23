@@ -68,16 +68,18 @@ def make_harvest_from_result(result, masses):
 @click.option(
     "--group",
     default="1Lbb",
-    type=click.Choice([
-        "compressed",
-        "1Lbb",
-        "2L0J",
-        "3Loffshell",
-        "stop1L",
-    ]),
+    type=click.Choice(
+        [
+            "compressed",
+            "1Lbb",
+            "2L0J",
+            "3Loffshell",
+            "stop1L",
+        ]
+    ),
 )
 @click.option("--include", default=None)
-@click.option('--simplified/--no-simplified', default=False)
+@click.option("--simplified/--no-simplified", default=False)
 def main(group, include, simplified):
     harvest = []
     signal_grid_results = {}

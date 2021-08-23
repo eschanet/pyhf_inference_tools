@@ -13,16 +13,16 @@ import pathlib
 import jsonpatch
 
 
-@parse.with_pattern(r'\d+[p\.]?\d+')
+@parse.with_pattern(r"\d+[p\.]?\d+")
 def parse_number(text):
-    return float(text.replace('p', '.'))
+    return float(text.replace("p", "."))
 
 
 @click.command()
 @click.argument("signals", nargs=-1, type=click.File("r"))
 @click.option(
-    '-b',
-    '--bkg-only',
+    "-b",
+    "--bkg-only",
     help="Background-only JSON file",
     required=True,
     type=click.File("r"),
@@ -33,52 +33,48 @@ def parse_number(text):
     help="Pattern of signal filenames to extract information from",
     default="{x:number}_{y:number}",
 )
+@click.option("--hepdata", help="hepdata record id, e.g. ins1234567", required=True)
 @click.option(
-    '--hepdata', help="hepdata record id, e.g. ins1234567", required=True
-)
-@click.option(
-    '-a',
-    '--algorithm',
-    'algorithms',
-    default=['sha256'],
-    help='Digest algorithms to use',
+    "-a",
+    "--algorithm",
+    "algorithms",
+    default=["sha256"],
+    help="Digest algorithms to use",
     multiple=True,
 )
 @click.option(
-    '-d',
-    '--description',
+    "-d",
+    "--description",
     default="signal patchset",
     help="Description of patchset file",
 )
 @click.option(
     "--output-file",
-    help=
-    "The location of the output json file. If not specified, prints to screen.",
+    help="The location of the output json file. If not specified, prints to screen.",
     default=None,
 )
-def main(
-    signals, bkg_only, pattern, algorithms, description, hepdata, output_file
-):
+def main(signals, bkg_only, pattern, algorithms, description, hepdata, output_file):
     patchset = {
-        'metadata': {
-            'description': description,
+        "metadata": {
+            "description": description,
         },
-        'patches': []
+        "patches": [],
     }
 
     # add in analysis id if specified
-    patchset['metadata']['references'] = {'hepdata': hepdata}
+    patchset["metadata"]["references"] = {"hepdata": hepdata}
     # add in the digest for background-only
     bkg_only_workspace = json.load(bkg_only)
-    patchset['metadata']['digests'] = {
+    patchset["metadata"]["digests"] = {
         algorithm: pyhf.utils.digest(bkg_only_workspace, algorithm=algorithm)
         for algorithm in algorithms
     }
     click.echo("Background-only digests:")
     click.echo(
-        '\t' +
-        json.dumps(patchset['metadata']['digests'], indent=4, sort_keys=True
-                   ).replace('\n', '\n\t')
+        "\t"
+        + json.dumps(patchset["metadata"]["digests"], indent=4, sort_keys=True).replace(
+            "\n", "\n\t"
+        )
     )
 
     p = parse.compile(pattern, dict(number=parse_number))
@@ -87,9 +83,9 @@ def main(
         click.echo("You didn't specify any named labels...")
         sys.exit(1)
     click.echo(f"You specified {len(labels)} labels: {labels}.")
-    patchset['metadata']['labels'] = labels
-    patchset['metadata']['references'] = {'hepdata': 'ins1234567'}
-    patchset['version'] = '1.0.0'
+    patchset["metadata"]["labels"] = labels
+    patchset["metadata"]["references"] = {"hepdata": "ins1234567"}
+    patchset["version"] = "1.0.0"
 
     click.echo(f"Making patches for {len(signals)} signals.")
     for signal in signals:
@@ -104,18 +100,12 @@ def main(
         if not patch.patch:
             click.echo(f"Patch failure for: {signal.name}")
             sys.exit(1)
-        patchset['patches'].append(
-            {
-                'metadata': {
-                    'name': signal_name,
-                    'values': values
-                },
-                'patch': patch.patch
-            }
+        patchset["patches"].append(
+            {"metadata": {"name": signal_name, "values": values}, "patch": patch.patch}
         )
 
     click.echo("Done. Validating patchset structure against schema.")
-    pyhf.utils.validate(patchset, 'patchset.json')
+    pyhf.utils.validate(patchset, "patchset.json")
     click.echo(
         f"Validated. {'Writing to file' if output_file else 'Printing to screen'}."
     )

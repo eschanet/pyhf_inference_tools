@@ -2,11 +2,13 @@
 
 # pylint: disable=import-error
 import ROOT
+
 print(ROOT.gROOT.GetVersion())
 
-import contourPlotter
+from helpers import contourPlotter
 import click
 import math
+
 
 @click.command()
 @click.option(
@@ -15,15 +17,15 @@ import math
     type=click.Choice(["1Lbb", "2L0J", "compressed", "3Loffshell", "stop1L"]),
 )
 @click.option(
-    '--contour',
-    '-c',
+    "--contour",
+    "-c",
     default=[],
     multiple=True,
     help="Contours to plot",
 )
 @click.option(
-    '--contour-label',
-    '-l',
+    "--contour-label",
+    "-l",
     default=[],
     multiple=True,
     help="Label of the contour",
@@ -31,20 +33,15 @@ import math
 @click.option("--width", type=int, default=1600, help="Width of canvas")
 @click.option("--height", type=int, default=1200, help="Height of canvas")
 @click.option(
-    "--comEnergy",
-    type=str,
-    default="13 TeV",
-    help="Center-of-mass energy for plot"
+    "--comEnergy", type=str, default="13 TeV", help="Center-of-mass energy for plot"
 )
 @click.option(
-    "--lumi-Label",
-    type=str,
-    default="#sqrt{{s}} = {comEnergy}, {luminosity} fb^{{-1}}"
+    "--lumi-Label", type=str, default="#sqrt{{s}} = {comEnergy}, {luminosity} fb^{{-1}}"
 )
 @click.option(
     "--xlabel",
     type=str,
-    default="m(#tilde{#chi}^{#pm}_{1})/m(#tilde{#chi}^{0}_{2}) [GeV]"
+    default="m(#tilde{#chi}^{#pm}_{1})/m(#tilde{#chi}^{0}_{2}) [GeV]",
 )
 @click.option(
     "--ylabel",
@@ -56,9 +53,7 @@ import math
 @click.option("--ymin", type=float, default=20, help="y-axis minimum")
 @click.option("--ymax", type=float, default=700, help="y-axis maximum")
 @click.option(
-    "--is-internal/--not-internal",
-    default=False,
-    help="Is this ATLAS Internal?"
+    "--is-internal/--not-internal", default=False, help="Is this ATLAS Internal?"
 )
 @click.option(
     "--is-preliminary/--not-preliminary",
@@ -95,8 +90,7 @@ import math
 @click.option(
     "--process-label",
     type=str,
-    default=
-    "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow Z #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; ",
+    default="pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow Z #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; ",
     help="Label for the physics process drawn",
 )
 @click.option("--luminosity", type=float, default=139000)
@@ -126,15 +120,13 @@ def main(
 ):
 
     plot = contourPlotter.contourPlotter(
-        "analyses/{group}/plots/exclusion_{group}".format(group=group), width,
-        height
+        "analyses/{group}/plots/exclusion_{group}".format(group=group), width, height
     )
 
     plot.lumiLabel = ""
     plot.processLabel = ""
     plot.canvas.SetLeftMargin(0.15)
     plot.canvas.SetBottomMargin(0.10)
-
 
     plot.drawAxes([xmin, ymin, xmax, ymax])
 
@@ -147,9 +139,7 @@ def main(
     i = 0
     yoffset = 0
     for idx, (cnt, label, color) in enumerate(zip(contour, contour_label, colors)):
-        f = ROOT.TFile(
-            "analyses/{group}/graphs/{cnt}".format(group=group, cnt=cnt)
-        )
+        f = ROOT.TFile("analyses/{group}/graphs/{cnt}".format(group=group, cnt=cnt))
         i += 1
         plot.drawOneSigmaBand(
             f.Get("Band_1s_0"),
@@ -157,18 +147,13 @@ def main(
             lineColor=color,
             alpha=0.3,
             legendOrder=i,
-            title=label + ' Exp.'
+            title=label + " Exp.",
         )
-        plot.drawExpected(
-            f.Get("Exp_0"), color=color, title=None, legendOrder=None
-        )
+        plot.drawExpected(f.Get("Exp_0"), color=color, title=None, legendOrder=None)
 
         i += 1
         plot.drawObserved(
-            f.Get("Obs_0"),
-            color=color,
-            title=label + ' Obs.',
-            legendOrder=i
+            f.Get("Obs_0"), color=color, title=label + " Obs.", legendOrder=i
         )
 
         if draw_cls:
@@ -181,10 +166,9 @@ def main(
                 size=0.015,
                 yoffset=yoffset,
                 format="%.1g",
-                titlesize=0.03
+                titlesize=0.03,
             )
-            yoffset = 0.017 * ymax * (-1)**idx * math.floor(0.5*idx+1)
-
+            yoffset = 0.017 * ymax * (-1) ** idx * math.floor(0.5 * idx + 1)
 
     if draw_cls:
         plot.drawTextFromTGraph2D(
@@ -194,33 +178,30 @@ def main(
             alpha=0.4,
         )
 
-    if group == '1Lbb':
+    if group == "1Lbb":
         process_label = "pp #rightarrow #tilde{#chi}^{0}_{2} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{0}_{2} #rightarrow h #tilde{#chi}^{0}_{1},#tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; "
         text = "m(#tilde{#chi}^{#pm}_{1}/#tilde{#chi}^{0}_{2}) < m(#tilde{#chi}^{0}_{1}) + 125 GeV"
         plot.drawLine(
-            coordinates=[125, 0, ymax + 125, ymax],
-            label=text,
-            style=7,
-            angle=57
+            coordinates=[125, 0, ymax + 125, ymax], label=text, style=7, angle=57
         )
-    elif group == '2L0J':
+    elif group == "2L0J":
         process_label = "pp #rightarrow #tilde{#chi}^{#pm}_{1} #tilde{#chi}^{#pm}_{1} (Wino) production ; #tilde{#chi}^{#pm}_{1} #rightarrow W #tilde{#chi}^{0}_{1} ; "
         text = "m(#tilde{#chi}^{#pm}_{1}) < m(#tilde{#chi}^{0}_{1}) + m(W)"
         plot.drawLine(
             coordinates=[xmin, xmin - 80, ymax + 80, ymax],
             label=text,
             style=7,
-            angle=54
+            angle=54,
         )
 
-    elif group == 'stop1L':
+    elif group == "stop1L":
         process_label = "pp #rightarrow #tilde{t}_{1} #tilde{t}_{1} ; #tilde{t}_{1} #rightarrow bff #tilde{#chi}^{0}_{1}, #tilde{t}_{1} #rightarrow bW #tilde{#chi}^{0}_{1}, #tilde{t}_{1} #rightarrow t #tilde{#chi}^{0}_{1} ; "
         text = "m(#tilde{t}_{1}) < m(#tilde{#chi}^{0}_{1}) + m(t)"
         plot.drawLine(
             coordinates=[xmin, xmin - 173, ymax + 173, ymax],
             label=text,
             style=7,
-            angle=45
+            angle=45,
         )
 
     ## Axis Labels
@@ -263,9 +244,7 @@ def main(
         labels_top - 0.04,
         lumi_label.format(comEnergy=comenergy, luminosity=luminosity / 1.0e3),
     )
-    latexObject.DrawLatexNDC(
-        labels_left, labels_top - 0.04 * 2, "All limits at 95% CL"
-    )
+    latexObject.DrawLatexNDC(labels_left, labels_top - 0.04 * 2, "All limits at 95% CL")
 
     latexObject.SetTextSize(0.041)
     if is_internal and draw_atlas:

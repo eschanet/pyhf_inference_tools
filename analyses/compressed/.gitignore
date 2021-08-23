@@ -1,8 +1,0 @@
-workspaces/
-graphs/
-truth/
-results/
-likelihoods/
-tables/
-hf_workspaces
-*.root

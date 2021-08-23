@@ -46,41 +46,42 @@ def main(group, dir, signal, include):
 
         if not region_name in yields.keys():
             yields[region_name] = {}
-            yields[region_name]['excl'] = {}
-            yields[region_name]['bkgOnly'] = {}
-            yields[region_name]['free'] = {}
+            yields[region_name]["excl"] = {}
+            yields[region_name]["bkgOnly"] = {}
+            yields[region_name]["free"] = {}
 
-        if 'excl' in _f:
-            fitconfig = 'excl'
-        elif 'bkgOnly' in _f:
-            fitconfig = 'bkgOnly'
-        elif 'free' in _f:
-            fitconfig = 'free'
+        if "excl" in _f:
+            fitconfig = "excl"
+        elif "bkgOnly" in _f:
+            fitconfig = "bkgOnly"
+        elif "free" in _f:
+            fitconfig = "free"
 
-        with open(_f, 'r') as f:
+        with open(_f, "r") as f:
             for l in f:
                 if not l.strip().startswith("Fitted"):
                     continue
 
-                entries = l.strip().split('&')
+                entries = l.strip().split("&")
 
                 process = parse_process_name(entries[0])
                 (ylds, err_up, err_down) = parse_yields_err(entries[1])
 
-                yields[region_name][fitconfig][process] = (
-                    ylds, err_up, err_down
-                )
+                yields[region_name][fitconfig][process] = (ylds, err_up, err_down)
 
-        if (signal in yields[region_name][fitconfig]
-            ) and ('bkg' in yields[region_name][fitconfig]):
-            bkgyields = yields[region_name][fitconfig]['bkg']
+        if (signal in yields[region_name][fitconfig]) and (
+            "bkg" in yields[region_name][fitconfig]
+        ):
+            bkgyields = yields[region_name][fitconfig]["bkg"]
             sigyields = yields[region_name][fitconfig][signal]
-            yields[region_name][fitconfig]['bkg'] = (
-                bkgyields[0] - sigyields[0], bkgyields[1], bkgyields[2]
+            yields[region_name][fitconfig]["bkg"] = (
+                bkgyields[0] - sigyields[0],
+                bkgyields[1],
+                bkgyields[2],
             )
 
     for region in yields.keys():
-        samples = yields[region]['bkgOnly'].keys()
+        samples = yields[region]["bkgOnly"].keys()
         break
 
     for sample in samples:
@@ -107,25 +108,21 @@ def main(group, dir, signal, include):
         num_lowstat_regions = 0
         for region in regions:
             if region.startswith("CR"):
-                highstat_bkgOnly.append(yields[region]['bkgOnly'][sample][0])
-                highstat_bkgOnly_errs.append(
-                    yields[region]['bkgOnly'][sample][1]
-                )
-                highstat_excl.append(yields[region]['excl'][sample][0])
-                highstat_excl_errs.append(yields[region]['excl'][sample][1])
-                highstat_free.append(yields[region]['free'][sample][0])
-                highstat_free_errs.append(yields[region]['free'][sample][1])
+                highstat_bkgOnly.append(yields[region]["bkgOnly"][sample][0])
+                highstat_bkgOnly_errs.append(yields[region]["bkgOnly"][sample][1])
+                highstat_excl.append(yields[region]["excl"][sample][0])
+                highstat_excl_errs.append(yields[region]["excl"][sample][1])
+                highstat_free.append(yields[region]["free"][sample][0])
+                highstat_free_errs.append(yields[region]["free"][sample][1])
             else:
                 num_lowstat_regions += 1
 
-                lowstat_bkgOnly.append(yields[region]['bkgOnly'][sample][0])
-                lowstat_bkgOnly_errs.append(
-                    yields[region]['bkgOnly'][sample][1]
-                )
-                lowstat_excl.append(yields[region]['excl'][sample][0])
-                lowstat_excl_errs.append(yields[region]['excl'][sample][1])
-                lowstat_free.append(yields[region]['free'][sample][0])
-                lowstat_free_errs.append(yields[region]['free'][sample][1])
+                lowstat_bkgOnly.append(yields[region]["bkgOnly"][sample][0])
+                lowstat_bkgOnly_errs.append(yields[region]["bkgOnly"][sample][1])
+                lowstat_excl.append(yields[region]["excl"][sample][0])
+                lowstat_excl_errs.append(yields[region]["excl"][sample][1])
+                lowstat_free.append(yields[region]["free"][sample][0])
+                lowstat_free_errs.append(yields[region]["free"][sample][1])
 
         highstat_bkgOnly = np.array(highstat_bkgOnly)
         highstat_bkgOnly_errs = np.array(highstat_bkgOnly_errs)
@@ -152,10 +149,7 @@ def main(group, dir, signal, include):
             sharey=True,
             figsize=(6, 1 + num_regions / 4),
             dpi=100,
-            gridspec_kw={
-                'wspace': 0.03,
-                'width_ratios': [1, 2]
-            }
+            gridspec_kw={"wspace": 0.03, "width_ratios": [1, 2]},
         )
 
         ax2 = ax.twiny()
@@ -166,12 +160,12 @@ def main(group, dir, signal, include):
             xerr=highstat_free_errs,
             marker="o",
             markersize=4,
-            ls='',
+            ls="",
             color="green",
-            ecolor='black',
+            ecolor="black",
             elinewidth=0.8,
             capsize=1,
-            label=r"$\mu_\mathrm{SIG}$ free"
+            label=r"$\mu_\mathrm{SIG}$ free",
         )
 
         ax2.errorbar(
@@ -180,12 +174,12 @@ def main(group, dir, signal, include):
             xerr=highstat_bkgOnly_errs,
             marker="o",
             markersize=4,
-            ls='',
+            ls="",
             color="red",
-            ecolor='black',
+            ecolor="black",
             elinewidth=0.8,
             capsize=1,
-            label=r"$\mu_\mathrm{SIG} = 0$"
+            label=r"$\mu_\mathrm{SIG} = 0$",
         )
 
         ax2.errorbar(
@@ -194,12 +188,12 @@ def main(group, dir, signal, include):
             xerr=highstat_excl_errs,
             marker="o",
             markersize=4,
-            ls='',
+            ls="",
             color="blue",
-            ecolor='black',
+            ecolor="black",
             elinewidth=0.8,
             capsize=1,
-            label=r"$\mu_\mathrm{SIG} = 1$"
+            label=r"$\mu_\mathrm{SIG} = 1$",
         )
 
         ax.errorbar(
@@ -208,12 +202,12 @@ def main(group, dir, signal, include):
             xerr=lowstat_free_errs,
             marker="o",
             markersize=4,
-            ls='',
+            ls="",
             color="green",
-            ecolor='black',
+            ecolor="black",
             elinewidth=0.8,
             capsize=1,
-            label=r"$\mu_\mathrm{SIG}$ free"
+            label=r"$\mu_\mathrm{SIG}$ free",
         )
 
         ax.errorbar(
@@ -221,13 +215,13 @@ def main(group, dir, signal, include):
             y_pos_lowstat,
             xerr=lowstat_bkgOnly_errs,
             marker="o",
-            ls='',
+            ls="",
             markersize=4,
             color="red",
-            ecolor='black',
+            ecolor="black",
             elinewidth=0.8,
             capsize=1,
-            label=r"$\mu_\mathrm{SIG} = 0$"
+            label=r"$\mu_\mathrm{SIG} = 0$",
         )
 
         ax.errorbar(
@@ -236,12 +230,12 @@ def main(group, dir, signal, include):
             xerr=lowstat_excl_errs,
             marker="o",
             markersize=4,
-            ls='',
+            ls="",
             color="blue",
-            ecolor='black',
+            ecolor="black",
             elinewidth=0.8,
             capsize=1,
-            label=r"$\mu_\mathrm{SIG} = 1$"
+            label=r"$\mu_\mathrm{SIG} = 1$",
         )
 
         #
@@ -259,8 +253,8 @@ def main(group, dir, signal, include):
             # ),
             color="blue",
             error_kw={
-                "ecolor":"gray",
-                "elinewidth":0.8,
+                "ecolor": "gray",
+                "elinewidth": 0.8,
             },
             linewidth=0.8,
             # label=r"$\mu_\mathrm{SIG} = 1$"
@@ -277,8 +271,8 @@ def main(group, dir, signal, include):
             # ),
             color="green",
             error_kw={
-                "ecolor":"gray",
-                "elinewidth":0.8,
+                "ecolor": "gray",
+                "elinewidth": 0.8,
             },
             # label=r"$\mu_\mathrm{SIG} = 1$"
         )
@@ -294,8 +288,8 @@ def main(group, dir, signal, include):
             # ),
             color="blue",
             error_kw={
-                "ecolor":"gray",
-                "elinewidth":0.8,
+                "ecolor": "gray",
+                "elinewidth": 0.8,
             },
             linewidth=0.8,
             # label=r"$\mu_\mathrm{SIG} = 1$"
@@ -312,8 +306,8 @@ def main(group, dir, signal, include):
             # ),
             color="green",
             error_kw={
-                "ecolor":"gray",
-                "elinewidth":0.8,
+                "ecolor": "gray",
+                "elinewidth": 0.8,
             },
             # label=r"$\mu_\mathrm{SIG} = 1$"
         )
@@ -324,33 +318,29 @@ def main(group, dir, signal, include):
             num_lowstat_regions - 0.5,
             linestyle=(0, (5, 5)),
             linewidth=0.9,
-            color="gray"
+            color="gray",
         )
         ax_ratio.axhline(
             num_lowstat_regions - 0.5,
             linestyle=(0, (5, 5)),
             linewidth=0.9,
-            color="gray"
+            color="gray",
         )
 
         ax_ratio.set_xlim([0.5, 1.5])
-        ax_ratio.axvline(
-            1.0, linestyle=(0, (5, 5)), linewidth=0.9, color="gray"
-        )
+        ax_ratio.axvline(1.0, linestyle=(0, (5, 5)), linewidth=0.9, color="gray")
         # ax.hlines(0, -0.5, num_regions - 0.5, linestyles="dotted", color="black")
 
         sample = sample.replace("\\", "")
         # ax2.set_xlabel(f"Fitted {sample} yields CRs")
-        ax2.spines['top'].set_color('black')
-        ax2.xaxis.label.set_color('black')
+        ax2.spines["top"].set_color("black")
+        ax2.xaxis.label.set_color("black")
         ax2.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())
-        ax2.tick_params(direction="in", which="both", axis='x', colors='black')
+        ax2.tick_params(direction="in", which="both", axis="x", colors="black")
         ax2.tick_params(axis="both", which="major", pad=8)
 
         ax.set_xlabel(f"Fitted {sample} yields SRs")
-        ax.xaxis.set_minor_locator(
-            mpl.ticker.AutoMinorLocator()
-        )  # minor ticks
+        ax.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())  # minor ticks
         ax.tick_params(axis="both", which="major", pad=8)
         ax.tick_params(direction="in", top=False, right=True, which="both")
 
@@ -358,9 +348,7 @@ def main(group, dir, signal, include):
         ax_ratio.set_ylim([-0.5, num_regions - 0.5])
         ax_ratio.set_yticks(y_positions)
         ax_ratio.set_yticklabels(regions)
-        ax_ratio.xaxis.set_minor_locator(
-            mpl.ticker.AutoMinorLocator()
-        )  # minor ticks
+        ax_ratio.xaxis.set_minor_locator(mpl.ticker.AutoMinorLocator())  # minor ticks
         ax_ratio.tick_params(axis="both", which="major", pad=8)
         ax_ratio.tick_params(
             direction="in", labeltop=True, top=True, right=True, which="both"
@@ -372,7 +360,7 @@ def main(group, dir, signal, include):
 
         fig.savefig(
             f"analyses/{group}/plots/yields_{dir}_{sample}_{group}.pdf",
-            bbox_inches='tight'
+            bbox_inches="tight",
         )
         plt.close(fig)
 
@@ -382,7 +370,7 @@ def string_to_float(string):
 
 
 def parse_region_name(_str, group):
-    if group == 'compressed':
+    if group == "compressed":
         replacements = [
             (".tex", ""),
             ("diboson_fakes_other_Zttjets_top_inRegions_", ""),
@@ -403,12 +391,14 @@ def parse_region_name(_str, group):
             basename = basename.replace(to_replace, replace_with)
 
         # try to map to nice names
-        if basename.startswith('SR'):
-            if basename.startswith('SRee'):
+        if basename.startswith("SR"):
+            if basename.startswith("SRee"):
                 basename = basename.replace("SRee_", "SR_") + "_ee"
-            elif basename.startswith('SRmm'):
+            elif basename.startswith("SRmm"):
                 basename = basename.replace("SRmm_", "SR_") + "_mm"
-            basename = basename.replace(f"{basename.split('_')[1]}_", "E_") + basename.split('_')[1].replace("eMLL","_bin_")
+            basename = basename.replace(
+                f"{basename.split('_')[1]}_", "E_"
+            ) + basename.split("_")[1].replace("eMLL", "_bin_")
 
         region_name = basename.replace("_", "-")
     else:
@@ -424,15 +414,13 @@ def parse_process_name(_str):
 
 def parse_yields_err(_str):
 
-    if '\pm' in _str:
+    if "\pm" in _str:
         # probably symmetric error
-        ylds = float(_str.replace(" ", "").split('\pm')[0].replace("$", ""))
+        ylds = float(_str.replace(" ", "").split("\pm")[0].replace("$", ""))
 
-        if len(_str.split('\pm')) > 1:
+        if len(_str.split("\pm")) > 1:
             err = float(
-                _str.replace(" ",
-                             "").split('\pm')[1].replace("$",
-                                                         "").replace("\\", "")
+                _str.replace(" ", "").split("\pm")[1].replace("$", "").replace("\\", "")
             )
         else:
             err = 0.0
@@ -441,19 +429,25 @@ def parse_yields_err(_str):
 
     else:
         # asymmetric errors
-        ylds = float(_str.replace(" ", "").split('_')[0].replace("$", ""))
-        if len(_str.split('_')) > 1:
+        ylds = float(_str.replace(" ", "").split("_")[0].replace("$", ""))
+        if len(_str.split("_")) > 1:
             err_up = float(
-                _str.replace(" ", "").split('_')[1].split('^')
-                [0].replace("$", "").replace("{",
-                                             "").replace("}",
-                                                         "").replace("\\", "")
+                _str.replace(" ", "")
+                .split("_")[1]
+                .split("^")[0]
+                .replace("$", "")
+                .replace("{", "")
+                .replace("}", "")
+                .replace("\\", "")
             )
             err_down = float(
-                _str.replace(" ", "").split('_')[1].split('^')
-                [1].replace("$", "").replace("{",
-                                             "").replace("}",
-                                                         "").replace("\\", "")
+                _str.replace(" ", "")
+                .split("_")[1]
+                .split("^")[1]
+                .replace("$", "")
+                .replace("{", "")
+                .replace("}", "")
+                .replace("\\", "")
             )
         else:
             err_up = err_down = 0.0
