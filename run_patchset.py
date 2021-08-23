@@ -2,11 +2,9 @@
 import click
 import copy
 import pathlib
-import subprocess
 import re
 import json
 import jsonpatch
-import numpy as np
 
 import pyhf
 

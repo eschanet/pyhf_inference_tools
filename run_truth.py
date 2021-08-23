@@ -2,12 +2,11 @@
 
 import click
 import collections
-import glob
 import csv
 import json
 import re
 import math
-import pathlib, os
+import pathlib
 import jsonpatch
 import pprint
 

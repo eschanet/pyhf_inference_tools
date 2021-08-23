@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
 import getopt
-import sys, commands
+import sys
 import os, os.path
-import shutil
 import glob
 
 import ROOT

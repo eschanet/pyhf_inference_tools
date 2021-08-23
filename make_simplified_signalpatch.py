@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 import click
 import pathlib
-import subprocess
 import re
 import json
 import numpy as np
-
 import pyhf
 
 pattern = re.compile("(\d+(?:p[05])?)_(\d+(?:p[05])?)")

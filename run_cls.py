@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import click
 import pathlib
-import subprocess
 import re
 import pyhf
 import json

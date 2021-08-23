@@ -2,8 +2,6 @@
 
 import click
 
-import uproot
-import pandas
 import numpy as np
 import json
 

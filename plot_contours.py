@@ -3,8 +3,6 @@
 # pylint: disable=import-error
 import ROOT
 
-print(ROOT.gROOT.GetVersion())
-
 from helpers import contourPlotter
 import click
 import math

@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 import click
-import pathlib
-import subprocess
 import re
-import json
 import os
 import glob
 
