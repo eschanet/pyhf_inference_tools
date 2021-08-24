@@ -1,8 +1,12 @@
-## Pyhf conversion workflow
+# Inference tools
 
-This repository gathers a bunch of scripts and tools to convert the HF output from an analysis into pyhf workspaces (`BkgOnly.json` and `patchset.json`). It also allows to create simplified versions of the likelihood using [`simplify`](https://gitlab.cern.ch/eschanet/simplify). It further allows to cross-check the results of the simplified likelihood by comparing them with the full results from the analysis.
+[![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-270/)
+[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-270/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![GitHub tag](https://img.shields.io/github/tag/eschanet/pyhf_inference_tools.svg)](https://github.com/eschanet/pyhf_inference_tools/tags/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-Parts of this repository's scripts are inspired by gstark's [compressed+3Loffshell combination infrastructure](https://gitlab.cern.ch/gstark/ewk-combination-3loffshell-compressed).
+This repository gathers a bunch of scripts and tools to convert the HF output from an analysis into pyhf workspaces (`BkgOnly.json` and `patchset.json`), perform statistical inference and plot the results. It also allows to create simplified versions of the likelihood using [`simplify`](https://gitlab.cern.ch/eschanet/simplify). It further allows to cross-check the results of the simplified likelihood by comparing them with the full results from the analysis. Needs both `python 2.7` and `python 3` because of `ROOT`, `HistFitter` and `pyhf`. 
 
 ### Signal patch
 
